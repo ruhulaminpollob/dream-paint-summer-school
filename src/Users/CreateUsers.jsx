@@ -1,26 +1,49 @@
-import { useState } from "react";
+
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProvider";
 
 
 const CreateUsers = () => {
-
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {createUser, googleLogin}=useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false)
     const [machPassword, setMachPassword]=useState(true)
+    
+    
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-
         setMachPassword(true)
         if (data.confirm !== data.password) {
             setMachPassword(false)
             return;
         }
-        console.log(data);
+
+
+        //createUser 
+        createUser(data.email, data.password)
+        .then(result=>{
+            console.log(result.user);
+        })
+        .catch(error=>{
+            console.log(error)
+        })
 
         
-        // console.log(errors)
+    }
+
+    // google login 
+
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     // console.log(watch("example"));
@@ -107,6 +130,13 @@ const CreateUsers = () => {
                                 }
                                 
                             </div>
+                            <div className="divider">OR</div>
+                        <div className="pb-5 mx-auto">
+                            <h1 onClick={handleGoogleLogin} className="btn">
+                                Login with google <FaGoogle className=" inline" onClick={handleGoogleLogin}></FaGoogle>
+                            </h1>
+                            
+                        </div>
                         </div>
                     </form>
                 </div>

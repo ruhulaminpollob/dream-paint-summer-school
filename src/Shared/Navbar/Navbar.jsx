@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 
 const Navbar = () => {
+    const {logOut, user}=useContext(AuthContext)
 
     const navLink = <>
         <li className="hover:text-cyan-400"><Link>Home</Link></li>
@@ -11,6 +14,11 @@ const Navbar = () => {
         {/* <li className="hover:text-cyan-400"><Link>User Profile</Link></li> */}
     </>
 
+    const handleLogOut=()=>{
+        logOut()
+        .then()
+        .catch(error=>console.log(error))
+    }
     return (
         <div className="navbar max-w-7xl mx-auto  text-white">
             <div className="navbar-start">
@@ -32,18 +40,21 @@ const Navbar = () => {
                     {navLink}
                 </ul>
             </div>
-            {/* <div className="navbar-end">
+            <div className="navbar-end">
                 {
                     user ?
                         <div className='flex gap-3'>
-                            <div className='border-2 border-cyan-400 h-10 w-10 rounded-full overflow-hidden'>
-                                <img className='' src={user?.photoURL ? user?.photoURL : unknownUser} title={user?.displayName ? user?.displayName : unknownName} alt="" />
+                            <div className='border-2 border-white h-10 w-10 rounded-full overflow-hidden'>
+                                <img className='' src={user?.photoURL ? user?.photoURL : "unknownUser"} title={user?.displayName ? user?.displayName : "unknownName"} alt="" />
                             </div>
-                            <button onClick={handleLogOut}><ArrowRightOnRectangleIcon className='text-yellow-400 h-6 w-6'></ArrowRightOnRectangleIcon></button>
+                            <button onClick={handleLogOut} className="hover:text-cyan-400">
+                                LogOut
+                                {/* <ArrowRightOnRectangleIcon className='text-yellow-400 h-6 w-6'></ArrowRightOnRectangleIcon> */}
+                                </button>
                         </div> :
                         <Link className='hover:text-cyan-400' to='/login'>Login</Link>
                 }
-            </div> */}
+            </div>
         </div>
     );
 };
