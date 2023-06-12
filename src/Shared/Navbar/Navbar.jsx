@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 
@@ -7,17 +8,39 @@ const Navbar = () => {
     const {logOut, user}=useContext(AuthContext)
 
     const navLink = <>
-        <li className="hover:text-cyan-400"><Link>Home</Link></li>
-        <li className="hover:text-cyan-400"><Link>Instructors</Link></li>
-        <li className="hover:text-cyan-400"><Link>Classes</Link></li>
-        <li className="hover:text-cyan-400"><Link>Dashboard</Link></li>
+        <li className="hover:text-cyan-400"><Link to="/">Home</Link></li>
+        <li className="hover:text-cyan-400"><Link to="/instructors">Instructors</Link></li>
+        <li className="hover:text-cyan-400"><Link to="/classes">Classes</Link></li>
+        <li className="hover:text-cyan-400"><Link to="/dashboard">Dashboard</Link></li>
         {/* <li className="hover:text-cyan-400"><Link>User Profile</Link></li> */}
     </>
 
     const handleLogOut=()=>{
-        logOut()
-        .then()
-        .catch(error=>console.log(error))
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: " You want to log out",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Log out'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logOut()
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Successful',
+                            text: 'Log out successful',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+        })
     }
     return (
         <div className="navbar max-w-7xl mx-auto  text-white">

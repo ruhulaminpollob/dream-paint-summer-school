@@ -3,16 +3,19 @@ import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
 
 const CreateUsers = () => {
-    const {createUser, googleLogin}=useContext(AuthContext)
+    const { createUser, profileDetails, googleLogin } = useContext(AuthContext)
     const [showPassword, setShowPassword] = useState(false)
-    const [machPassword, setMachPassword]=useState(true)
-    
-    
+    const [machPassword, setMachPassword] = useState(true)
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from.pathname || '/'
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
         setMachPassword(true)
@@ -24,14 +27,21 @@ const CreateUsers = () => {
 
         //createUser 
         createUser(data.email, data.password)
-        .then(result=>{
-            console.log(result.user);
-        })
-        .catch(error=>{
-            console.log(error)
-        })
+            .then(result => {
+                console.log(result.user);
+                profileDetails(data.name, data.photo)
+                    .then(() => {
+                        navigate(from, { replace: true })
 
-        
+                    })
+                    .catch((error) => console.log(error))
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+
     }
 
     // google login 
@@ -40,6 +50,7 @@ const CreateUsers = () => {
         googleLogin()
             .then(result => {
                 console.log(result.user)
+                navigate(from, { replace: true })
             })
             .catch(error => {
                 console.log(error);
@@ -128,15 +139,15 @@ const CreateUsers = () => {
                                 {
                                     !machPassword && <p className="text-red-500">Password are not matched</p>
                                 }
-                                
+
                             </div>
                             <div className="divider">OR</div>
-                        <div className="pb-5 mx-auto">
-                            <h1 onClick={handleGoogleLogin} className="btn">
-                                Login with google <FaGoogle className=" inline" onClick={handleGoogleLogin}></FaGoogle>
-                            </h1>
-                            
-                        </div>
+                            <div className="pb-5 mx-auto">
+                                <h1 onClick={handleGoogleLogin} className="btn">
+                                    Login with google <FaGoogle className=" inline" onClick={handleGoogleLogin}></FaGoogle>
+                                </h1>
+
+                            </div>
                         </div>
                     </form>
                 </div>

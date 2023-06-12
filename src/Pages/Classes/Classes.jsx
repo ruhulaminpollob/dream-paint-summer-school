@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import ClassCard from "./ClassCard";
+import ClassCard from "../PopularClass/ClassCard";
 
 
-const PopularClass = () => {
+const Classes = () => {
+
     const [classes, setClasses]=useState([])
 
     useEffect(()=>{
@@ -14,7 +15,7 @@ const PopularClass = () => {
 
     return (
         <div className="max-w-7xl mx-auto">
-            <h1 className="py-10 text-4xl font-bold text-center underline text-cyan-400">Popular Classes</h1>
+            <h1 className="py-10 text-4xl font-bold text-center underline text-cyan-400">All Classes</h1>
             
             <div className="grid md:grid-cols-3 gap-5">
 
@@ -27,4 +28,4 @@ const PopularClass = () => {
     );
 };
 
-export default PopularClass;
+export default Classes;

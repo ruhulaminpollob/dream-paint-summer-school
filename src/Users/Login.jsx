@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
 
@@ -14,10 +14,16 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false)
 
+    const navigate=useNavigate()
+    const location=useLocation()
+    const from=location.state?.from.pathname || '/'
+
+
     const onSubmit = data => {
         login(data.email, data.password)
             .then(result => {
                 console.log(result.user);
+                navigate(from, {replace: true})
             })
 
 
@@ -27,6 +33,7 @@ const Login = () => {
         googleLogin()
             .then(result => {
                 console.log(result.user)
+                navigate(from, {replace: true})
             })
             .catch(error => {
                 console.log(error);

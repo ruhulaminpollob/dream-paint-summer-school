@@ -20,7 +20,7 @@ const Banner = () => {
             <img className='' src={slide.image} alt={`Slide ${index + 1}`} />
             <div className="absolute top-1/2 left-1/2 bg-black bg-opacity-50 p-20 rounded transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
               <h2 className="text-4xl font-bold mb-4">{slide.caption}</h2>
-              <p className="text-lg mb-8">This Summer Invest in your hobby</p>
+              <p className="text-lg mb-8">In This Summer Invest in your hobby</p>
               <div className="space-x-4">
                 <button className="px-8 py-4 bg-yellow-400 text-white rounded">
                  Find Out More

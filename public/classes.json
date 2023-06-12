@@ -1,0 +1,50 @@
+[
+    {
+      "image": "https://i.ibb.co/R4tfv1j/a.jpg",
+      "name": "Landscape Painting",
+      "instructorName": "John Smith",
+      "availableSeats": 0,
+      "price": 50,
+      "instructorEmail": "johnsmith@example.com"
+    },
+    {
+      "image": "https://i.ibb.co/F8gmvPv/b.jpg",
+      "name": "Still Life Painting",
+      "instructorName": "Jane Doe",
+      "availableSeats": 0,
+      "price": 40,
+      "instructorEmail": "janedoe@example.com"
+    },
+    {
+      "image": "https://i.ibb.co/HYVbsTw/c.jpg",
+      "name": "Abstract Painting",
+      "instructorName": "Alex Johnson",
+      "availableSeats": 30,
+      "price": 60,
+      "instructorEmail": "alexjohnson@example.com"
+    },
+    {
+      "image": "https://i.ibb.co/Z2SS2mg/d.jpg",
+      "name": "Watercolor Painting",
+      "instructorName": "Sarah Wilson",
+      "availableSeats": 30,
+      "price": 45,
+      "instructorEmail": "sarahwilson@example.com"
+    },
+    {
+      "image": "https://i.ibb.co/FYqRtwX/e.jpg",
+      "name": "Portrait Painting",
+      "instructorName": "Michael Brown",
+      "availableSeats": 30,
+      "price": 55,
+      "instructorEmail": "michaelbrown@example.com"
+    },
+    {
+      "image": "https://i.ibb.co/WnFNm4g/f.jpg",
+      "name": "Mixed Media Painting",
+      "instructorName": "Emily Davis",
+      "availableSeats": 30,
+      "price": 50,
+      "instructorEmail": "emilydavis@example.com"
+    }
+  ]
