@@ -42,11 +42,18 @@ const ClassCard = ({ singleClass }) => {
         .then(res=>res.json())
         .then(data=>{
             console.log(data)
-            if (data.insertedId) {
+            if (data?.insertedId) {
                 Swal.fire(
                     'Good job!',
                     ` Class added to your wish list`,
                     'success'
+                  )
+            }
+            else{
+                Swal.fire(
+                    'Ops!',
+                    `${data?.message}`,
+                    'error'
                   )
             }
             

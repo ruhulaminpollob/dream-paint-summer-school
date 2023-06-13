@@ -31,7 +31,22 @@ const CreateUsers = () => {
                 console.log(result.user);
                 profileDetails(data.name, data.photo)
                     .then(() => {
-                        navigate(from, { replace: true })
+                        const user={name:data.name, email:data.email, role:'student'}
+                        fetch('http://localhost:5000/users',{
+                            method:'POST',
+                            headers:{
+                                'content-type':'application/json'
+                            },
+                            body:JSON.stringify(user)
+                        })
+                        .then(res=>res.json())
+                        .then(data=>{
+                            if (data.insertedId) {
+                                navigate(from, { replace: true })
+                                
+                            }
+                        })
+
 
                     })
                     .catch((error) => console.log(error))
