@@ -26,7 +26,7 @@ const Login = () => {
                 console.log(result.user);
                 navigate(from, { replace: true })
             })
-            .catch(err=>{
+            .catch(err => {
                 setIsError(err)
             })
 
@@ -37,6 +37,16 @@ const Login = () => {
         googleLogin()
             .then(result => {
                 console.log(result.user)
+                const user = { name: result.user.displayName, email: result.user.email, role: 'student' }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(res => res.json())
+                    .then(() => {})
                 navigate(from, { replace: true })
             })
             .catch(err => {
@@ -99,7 +109,7 @@ const Login = () => {
                         </div>
 
                         <div>
-                            
+
                         </div>
                         <div className="divider">OR</div>
                         <div className="pb-5 mx-auto">

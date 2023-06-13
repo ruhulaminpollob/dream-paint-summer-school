@@ -31,21 +31,21 @@ const CreateUsers = () => {
                 console.log(result.user);
                 profileDetails(data.name, data.photo)
                     .then(() => {
-                        const user={name:data.name, email:data.email, role:'student'}
-                        fetch('http://localhost:5000/users',{
-                            method:'POST',
-                            headers:{
-                                'content-type':'application/json'
+                        const user = { name: data.name, email: data.email, role: 'student' }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
                             },
-                            body:JSON.stringify(user)
+                            body: JSON.stringify(user)
                         })
-                        .then(res=>res.json())
-                        .then(data=>{
-                            if (data.insertedId) {
-                                navigate(from, { replace: true })
-                                
-                            }
-                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    navigate(from, { replace: true })
+
+                                }
+                            })
 
 
                     })
@@ -65,7 +65,19 @@ const CreateUsers = () => {
         googleLogin()
             .then(result => {
                 console.log(result.user)
+
+                const user = { name: result.user.displayName, email: result.user.email, role: 'student' }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(res => res.json())
+                    .then(() => { })
                 navigate(from, { replace: true })
+
             })
             .catch(error => {
                 console.log(error);
