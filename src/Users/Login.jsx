@@ -10,20 +10,24 @@ import { AuthContext } from "../Providers/AuthProvider";
 
 const Login = () => {
 
+    const [isError, setIsError] = useState("")
     const { login, googleLogin } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false)
 
-    const navigate=useNavigate()
-    const location=useLocation()
-    const from=location.state?.from.pathname || '/'
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from.pathname || '/'
 
 
     const onSubmit = data => {
         login(data.email, data.password)
             .then(result => {
                 console.log(result.user);
-                navigate(from, {replace: true})
+                navigate(from, { replace: true })
+            })
+            .catch(err=>{
+                setIsError(err)
             })
 
 
@@ -33,10 +37,10 @@ const Login = () => {
         googleLogin()
             .then(result => {
                 console.log(result.user)
-                navigate(from, {replace: true})
+                navigate(from, { replace: true })
             })
-            .catch(error => {
-                console.log(error);
+            .catch(err => {
+                setIsError(err);
             })
     }
 
@@ -93,12 +97,16 @@ const Login = () => {
                             </div>
 
                         </div>
+
+                        <div>
+                            
+                        </div>
                         <div className="divider">OR</div>
                         <div className="pb-5 mx-auto">
                             <h1 onClick={handleGoogleLogin} className="btn">
                                 Login with google <FaGoogle className=" inline"></FaGoogle>
                             </h1>
-                            
+
                         </div>
                     </form>
                 </div>

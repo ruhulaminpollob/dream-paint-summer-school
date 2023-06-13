@@ -8,6 +8,7 @@ const ClassCard = ({ singleClass }) => {
     const {user}=useContext(AuthContext)
     const {name,image, instructorName, availableSeats, price}=singleClass || {}
     
+    
     const navigate=useNavigate()
     const admin=false
 
@@ -27,10 +28,33 @@ const ClassCard = ({ singleClass }) => {
                 }
               })
         }
+        
+        const myClassData={name, image, price, email: user.email}
+        
+
+        fetch("http://localhost:5000/myclasses", {
+            method:'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(myClassData)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            if (data.insertedId) {
+                Swal.fire(
+                    'Good job!',
+                    ` Class added to your wish list`,
+                    'success'
+                  )
+            }
+            
+
+        })
 
 
-
-        console.log(name, 'class selected');
+        // console.log(name, 'class selected');
     }
     return (
         <div className={`card card-compact w-96 bg-base-100 shadow-xl ${availableSeats === 0 && "bg-red-400"}`}>
