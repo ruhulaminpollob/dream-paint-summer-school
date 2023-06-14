@@ -1,11 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
 import useAdmin from "../Utilities/useAdmin";
+import useInstructor from "../Utilities/useInstructor";
 
 
 const Dashboard = () => {
 
-    const isInstructor = false;
     const [isAdmin] = useAdmin()
+    const [isInstructor] =useInstructor() ;
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

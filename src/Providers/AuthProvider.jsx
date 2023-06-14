@@ -27,46 +27,50 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
-    const profileDetails=(name,photo)=>{
+    const profileDetails = (name, photo) => {
         return updateProfile(auth.currentUser, {
-            displayName:name,
-            photoURL:photo
+            displayName: name,
+            photoURL: photo
         })
     }
 
     // social login (google) 
     const googleProvider = new GoogleAuthProvider();
 
-    const googleLogin=()=>{
-        return signInWithPopup(auth,googleProvider)
+    const googleLogin = () => {
+        return signInWithPopup(auth, googleProvider)
     }
 
 
-    const logOut=()=>{
+    const logOut = () => {
         return signOut(auth)
     }
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
+
 
             // jwt token work
 
             if (currentUser) {
-                
-                axios.post('http://localhost:5000/jwt', {email:currentUser.email})
-                .then(data=>{
-                    localStorage.setItem('jwt-secret-token', data.data.token)
-                })
+
+                axios.post('http://localhost:5000/jwt', { email: currentUser.email })
+                    .then(data => {
+                        localStorage.setItem('jwt-secret-token', data.data.token)
+                        setUser(currentUser)
+                        setLoading(false);
+                    })
             }
-            else{
+            else {
                 localStorage.removeItem('jwt-secret-token')
+                setUser(currentUser)
+                setLoading(false);
             }
 
-            setLoading(false);
+
         })
-        
+
         return () => {
-            return unsubscribe();     
+            return unsubscribe();
         }
     }, [])
 
