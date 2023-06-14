@@ -55,11 +55,11 @@ import AdminRoute from "./AdminRoute";
 
             {
               path:'admin',
-              element:<Admin></Admin>
+              element:<AdminRoute><Admin></Admin></AdminRoute>
             },
             {
               path:'manageclasses',
-              element:<ManageClasses></ManageClasses>
+              element:<AdminRoute><ManageClasses></ManageClasses></AdminRoute>
             },
             {
               path:'allusers',
