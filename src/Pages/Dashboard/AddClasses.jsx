@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosSecure from "../../Utilities/useAxiosSecure";
 
 
 const imageHosting = import.meta.env.VITE_Image_Hosting_token
 const AddClasses = () => {
     const { user } = useContext(AuthContext)
+    const [axiosSecure] = useAxiosSecure();
 
 
     const imageHostingURL = `https://api.imgbb.com/1/upload?key=${imageHosting}`
@@ -21,9 +24,10 @@ const AddClasses = () => {
         const availableSeat = form.availableSeat.value;
         const instructorName = form.instructorName.value;
         const instructorEmail = form.instructorEmail.value;
+        const price = parseFloat(form.price.value);
         const image = form.image.files[0];
-        const state='pending'
-        const newClass= {name, availableSeat, instructorName, instructorEmail, state}
+        const state = 'pending'
+        const newClass = { name, availableSeat, price, instructorName, instructorEmail, state }
 
 
         const formData = new FormData();
@@ -33,10 +37,23 @@ const AddClasses = () => {
             const response = await axios.post(imageHostingURL, formData);
 
             if (response.data.success) {
-                const imgURL=response.data.data.display_url;
-                const classData=newClass;
-                classData.image=imgURL;
-                console.log(classData)
+                const imgURL = response.data.data.display_url;
+                const classData = newClass;
+                classData.image = imgURL;
+                // console.log(classData)
+
+                axiosSecure.post('/classes', classData)
+                    .then(data => {
+                        console.log(data.data);
+                        if (data.data.insertedId) {
+                            Swal.fire(
+                                'Success',
+                                'New Class Added',
+                                'success'
+                            )
+                                form.reset()
+                        }
+                    })
             }
             // console.log(response.data);
         } catch (error) {
@@ -97,13 +114,24 @@ const AddClasses = () => {
                     </div>
                 </div>
 
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Image</span>
-                    </label>
-                    <label className="input-group">
-                        <input type="file" name='image' required className="input input-bordered w-full" />
-                    </label>
+                <div className="md:flex">
+
+                    <div className="form-control md:w-1/2">
+                        <label className="label">
+                            <span className="label-text">Image</span>
+                        </label>
+                        <label className="input-group">
+                            <input type="file" name='image' required className="input input-bordered w-full" />
+                        </label>
+                    </div>
+                    <div className="form-control md:w-1/2">
+                        <label className="label">
+                            <span className="label-text">Price</span>
+                        </label>
+                        <label className="input-group">
+                            <input type="text" name='price' placeholder="Price" required className="input input-bordered w-full" />
+                        </label>
+                    </div>
                 </div>
 
                 <input type="submit" className='btn bg-cyan-400 text-white font-bold hover:bg-cyan-300 w-full  my-4' value="Add Class" />
