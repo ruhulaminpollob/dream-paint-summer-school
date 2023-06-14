@@ -3,8 +3,9 @@ import { Link, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
 
-    const instructor = true;
-    const admin = false;
+    const instructor = false;
+    const admin = true;
+    const student=false
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -18,39 +19,41 @@ const Dashboard = () => {
                 <ul className="menu p-4 w-80 h-full font-bold bg-base-200 text-base-content">
 
                     {
-                        admin ? <>
+                        admin && <>
 
-                            <li><Link to="/dashboard/myselected">Admin</Link></li>
-                            <li><Link to="/dashboard/enrolled">Enrolled Classes</Link></li>
+                            <li><Link to="/dashboard/admin">Admin</Link></li>
+                            <li><Link to="/dashboard/manageclasses">Manage Classes</Link></li>
                             {/* <Link to="/dashboard/payment">Payment</Link> */}
-                            <li><Link to="/dashboard/paymenthistory">Manage Users</Link></li>
+                            <li><Link to="/dashboard/allusers">Manage Students</Link></li>
 
-                        </> : ''
-
+                        </>
                     }
 
                     {
 
-                        instructor ? <>
+                        instructor && <>
 
-                            <li><Link to="/dashboard/myselected">Instructor</Link></li>
-                            <li><Link to="/dashboard/enrolled">Add A Class</Link></li>
+                            <li><Link to="/dashboard/instructor">Instructor</Link></li>
+                            <li><Link to="/dashboard/addclasses">Add A Class</Link></li>
                             {/* <Link to="/dashboard/payment">Payment</Link> */}
-                            <li><Link to="/dashboard/paymenthistory">My Classes</Link></li>
+                            <li><Link to="/dashboard/instructorsclasses">My Classes</Link></li>
 
-                        </> :
-
-
-                            <>
-
-                                <li><Link to="/dashboard/myselected">My Selected Classes</Link></li>
-                                <li><Link to="/dashboard/enrolled">Enrolled Classes</Link></li>
-                                {/* <Link to="/dashboard/payment">Payment</Link> */}
-                                <li><Link to="/dashboard/paymenthistory">Payment History</Link></li>
-
-                            </>
-
+                        </>
                     }
+
+                    {
+                       student && <>
+
+
+                            <li><Link to="/dashboard/myselected">My Selected Classes</Link></li>
+                            <li><Link to="/dashboard/enrolled">Enrolled Classes</Link></li>
+                            {/* <Link to="/dashboard/payment">Payment</Link> */}
+                            <li><Link to="/dashboard/paymenthistory">Payment History</Link></li>
+
+                        </>
+                    }
+
+
 
 
 
