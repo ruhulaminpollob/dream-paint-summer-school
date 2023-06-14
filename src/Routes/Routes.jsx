@@ -20,6 +20,8 @@ import AllUsers from "../Pages/Dashboard/AllUsers";
 import ManageClasses from "../Pages/Dashboard/ManageClasses";
 import InstructorsClasses from "../Pages/Dashboard/InstructorsClasses";
 import AddClasses from "../Pages/Dashboard/AddClasses";
+import InstructorRoute from "./InstructorRoute";
+import AdminRoute from "./AdminRoute";
 
   const router = createBrowserRouter([
     {
@@ -61,18 +63,18 @@ import AddClasses from "../Pages/Dashboard/AddClasses";
             },
             {
               path:'allusers',
-              element:<AllUsers></AllUsers>
+              element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
             },
             {
               path:'instructor',
-              element:<Instructors></Instructors>
+              element:<InstructorRoute><Instructors></Instructors></InstructorRoute>
             },
             {
               path:'instructorsclasses',
-              element:<InstructorsClasses></InstructorsClasses>
+              element:<InstructorRoute><InstructorsClasses></InstructorsClasses></InstructorRoute>
             },{
               path:'addclasses',
-              element:<AddClasses></AddClasses>
+              element:<InstructorRoute><AddClasses></AddClasses></InstructorRoute>
             },
             
             {
