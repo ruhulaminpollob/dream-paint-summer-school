@@ -2,21 +2,36 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+// import useAdmin from "../../Utilities/useAdmin";
+// import useInstructor from "../../Utilities/useInstructor";
 
 
 const Navbar = () => {
-    const {logOut, user}=useContext(AuthContext)
+    const { logOut, user } = useContext(AuthContext)
+
+
+    console.log(user?.email);
+
+    // const [role, setRole] = useState('Student')
+
+    // user && fetch(`http://localhost:5000/user/${user?.email}`)
+    //     .then(res => res.json())
+    //     .then(data => setRole(data.role))
+
+
+
+
 
     const navLink = <>
         <li className="hover:text-cyan-400"><Link to="/">Home</Link></li>
         <li className="hover:text-cyan-400"><Link to="/instructors">Instructors</Link></li>
         <li className="hover:text-cyan-400"><Link to="/classes">Classes</Link></li>
-        <li className="hover:text-cyan-400"><Link to="/dashboard">Dashboard</Link></li>
+        <li className="hover:text-cyan-400"><Link to={`/dashboard`}>Dashboard</Link></li>
         {/* <li className="hover:text-cyan-400"><Link>User Profile</Link></li> */}
     </>
 
-    const handleLogOut=()=>{
-        
+    const handleLogOut = () => {
+
         Swal.fire({
             title: 'Are you sure?',
             text: " You want to log out",
@@ -73,7 +88,7 @@ const Navbar = () => {
                             <button onClick={handleLogOut} className="hover:text-cyan-400">
                                 LogOut
                                 {/* <ArrowRightOnRectangleIcon className='text-yellow-400 h-6 w-6'></ArrowRightOnRectangleIcon> */}
-                                </button>
+                            </button>
                         </div> :
                         <Link className='hover:text-cyan-400' to='/login'>Login</Link>
                 }
