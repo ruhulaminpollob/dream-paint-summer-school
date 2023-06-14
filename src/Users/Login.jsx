@@ -48,8 +48,10 @@ const Login = () => {
                     body: JSON.stringify(user)
                 })
                     .then(res => res.json())
-                    .then(() => {})
-                navigate(from, { replace: true })
+                    .then(() => {
+
+                        navigate(from, { replace: true })
+                    })
             })
             .catch(err => {
                 setIsError(err);
