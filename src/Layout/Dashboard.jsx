@@ -1,11 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
+import useAdmin from "../Utilities/useAdmin";
 
 
 const Dashboard = () => {
 
-    const instructor = false;
-    const admin = true;
-    const student=false
+    const isInstructor = false;
+    const [isAdmin] = useAdmin()
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -19,44 +19,33 @@ const Dashboard = () => {
                 <ul className="menu p-4 w-80 h-full font-bold bg-base-200 text-base-content">
 
                     {
-                        admin && <>
+                        isAdmin ? <>
 
                             <li><Link to="/dashboard/admin">Admin</Link></li>
                             <li><Link to="/dashboard/manageclasses">Manage Classes</Link></li>
                             {/* <Link to="/dashboard/payment">Payment</Link> */}
                             <li><Link to="/dashboard/allusers">Manage Students</Link></li>
+                        </> : <>
+                            {
+                                isInstructor ? <>
+
+                                    <li><Link to="/dashboard/instructor">Instructor</Link></li>
+                                    <li><Link to="/dashboard/addclasses">Add A Class</Link></li>
+                                    {/* <Link to="/dashboard/payment">Payment</Link> */}
+                                    <li><Link to="/dashboard/instructorsclasses">My Classes</Link></li>
+
+                                </> : <>
+                                    <li><Link to="/dashboard/myselected">My Selected Classes</Link></li>
+                                    <li><Link to="/dashboard/enrolled">Enrolled Classes</Link></li>
+                                    {/* <Link to="/dashboard/payment">Payment</Link> */}
+                                    <li><Link to="/dashboard/paymenthistory">Payment History</Link></li>
+
+                                </>
+
+                            }
 
                         </>
                     }
-
-                    {
-
-                        instructor && <>
-
-                            <li><Link to="/dashboard/instructor">Instructor</Link></li>
-                            <li><Link to="/dashboard/addclasses">Add A Class</Link></li>
-                            {/* <Link to="/dashboard/payment">Payment</Link> */}
-                            <li><Link to="/dashboard/instructorsclasses">My Classes</Link></li>
-
-                        </>
-                    }
-
-                    {
-                       student && <>
-
-
-                            <li><Link to="/dashboard/myselected">My Selected Classes</Link></li>
-                            <li><Link to="/dashboard/enrolled">Enrolled Classes</Link></li>
-                            {/* <Link to="/dashboard/payment">Payment</Link> */}
-                            <li><Link to="/dashboard/paymenthistory">Payment History</Link></li>
-
-                        </>
-                    }
-
-
-
-
-
                 </ul>
 
             </div>
