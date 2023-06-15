@@ -26,7 +26,7 @@ const AllUsers = () => {
             .then(data => {
                 if (data.modifiedCount) {
 
-                    refetch
+                    refetch()
                     Swal.fire(
                         'Good job!',
                         `${user.name} is now admin`,
@@ -46,7 +46,7 @@ const AllUsers = () => {
                 console.log(data);
                 if (data.modifiedCount) {
 
-                    refetch
+                    refetch()
                     Swal.fire(
                         'Good job!',
                         `${user.name} is now an Instructor`,
@@ -66,7 +66,7 @@ const AllUsers = () => {
             .then(data => {
                 if (data.deletedCount) {
                     
-                    refetch
+                    refetch()
                     Swal.fire(
                         'Delete',
                         `${user.name} has been deleted`,
