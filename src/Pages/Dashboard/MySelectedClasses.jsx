@@ -100,9 +100,9 @@ const MySelectedClasses = () => {
                                     <td>
                                         <button onClick={()=>handleDelete(singleData._id)} className="btn btn-error">Delete</button>
                                     </td>
-                                    <th>
+                                    <td>
                                         <button className="btn btn-info text-white">Pay</button>
-                                    </th>
+                                    </td>
                                 </tr>)
                         }
 
