@@ -1,6 +1,7 @@
 
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Utilities/useAxiosSecure";
 
@@ -9,40 +10,11 @@ const ManageClasses = () => {
 
     const [axiosSecure] = useAxiosSecure()
 
-
     const { data: classes = [], refetch } = useQuery(['classes'], async () => {
         const res = await axiosSecure.get('/classes')
         return res.data
     })
-
-
-
-    // const handleDelete = id => {
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You want to delete this class",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Delete'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             axiosSecure.delete(`/classes/${id}`)
-    //                 .then(res => {
-    //                     console.log(res.data)
-    //                     if (res.data.deletedCount > 0) {
-    //                         refetch()
-    //                         Swal.fire(
-    //                             'Deleted!',
-    //                             'Your class has been deleted.',
-    //                             'success'
-    //                         )
-    //                     }
-    //                 })
-    //         }
-    //     })
-    // }
+    const navigate=useNavigate()
 
 
     const handleApprove = id => {
@@ -75,7 +47,7 @@ const ManageClasses = () => {
     }
 
     const handleFeedback = classInfo => {
-        console.log(classInfo);
+       navigate(`/dashboard/feedback/${classInfo._id}`)
     }
 
     return (
@@ -104,23 +76,23 @@ const ManageClasses = () => {
                                 </div>
                                 <div>
                                     <h5>Available Seats: {singleData.availableSeats}</h5>
-                                   <h5> Price: {singleData.price}</h5>
+                                    <h5> Price: {singleData.price}</h5>
                                 </div>
 
                             </div>
-                            
+
                             <h4>State: <span className={`text-lg font-bold uppercase ${singleData.state === 'approved' ? 'text-green-400' : ''} `}> {singleData.state}</span></h4>
                             <div className="card-actions justify-end">
                                 <button onClick={() => handleApprove(singleData._id)} className={`btn btn-info text-white ${singleData.state !== 'pending' ? 'btn-disabled' : ''}`}>Approve</button>
                                 <button onClick={() => handleDeny(singleData._id)} className={`btn btn-error text-white  ${singleData.state !== 'pending' ? 'btn-disabled' : ''}`}>Deny</button>
-                                <button onClick={() => handleFeedback(singleData)} className={`btn btn-success text-white `}>Feedback</button>
+                                <button onClick={()=>handleFeedback(singleData)}  className={`btn btn-success text-white `}>Feedback</button>
                             </div>
                         </div>
                     </div>
-                )}
+                    )}
 
 
-                
+
             </div>
         </div>
     );

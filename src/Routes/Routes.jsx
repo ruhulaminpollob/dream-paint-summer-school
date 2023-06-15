@@ -22,6 +22,7 @@ import InstructorsClasses from "../Pages/Dashboard/InstructorsClasses";
 import AddClasses from "../Pages/Dashboard/AddClasses";
 import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
+import Feedback from "../Pages/Dashboard/Feedback";
 
   const router = createBrowserRouter([
     {
@@ -64,6 +65,12 @@ import AdminRoute from "./AdminRoute";
             {
               path:'allusers',
               element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
+            },
+            {
+              path:'feedback/:id',
+              element:<Feedback></Feedback>,
+              loader:({params})=>fetch(`http://localhost:5000/singleclass/${params.id}`)
+              
             },
             {
               path:'instructor',
