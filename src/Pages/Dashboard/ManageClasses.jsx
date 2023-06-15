@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+
 import { Helmet } from "react-helmet-async";
+import { useQuery } from "react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Utilities/useAxiosSecure";
 
 
 const ManageClasses = () => {
 
-    const [classes, setClasses] = useState([])
-    const [isDeleted, setIsDeleted]=useState(true)
-    const [axiosSecure]=useAxiosSecure()
+    const [axiosSecure] = useAxiosSecure()
 
-    useEffect(() => {
-        fetch('http://localhost:5000/classes')
-            .then(res => res.json())
-            .then(data => setClasses(data))
-    }, [isDeleted])
+
+    const { data: classes = [], refetch } = useQuery(['classes'], async () => {
+        const res = await axiosSecure.get('/classes')
+        return res.data
+    })
+    
+
 
     const handleDelete = id => {
         Swal.fire({
@@ -25,22 +26,22 @@ const ManageClasses = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Delete'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/classes/${id}`)
-                .then(res=>{
-                    console.log(res.data)
-                    if (res.data.deletedCount > 0) {
-                        setIsDeleted(!isDeleted)
-                        Swal.fire(
-                          'Deleted!',
-                          'Your class has been deleted.',
-                          'success'
-                        )
-                    }
-                })
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.deletedCount > 0) {
+                            refetch()
+                            Swal.fire(
+                                'Deleted!',
+                                'Your class has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
             }
-          })
+        })
     }
     const handleApprove = id => {
         console.log(id)
@@ -100,7 +101,7 @@ const ManageClasses = () => {
                                 <td>
                                     {
                                         singleData.state === 'approved' ? 'Approved' :
-                                            <button onClick={()=>handleApprove(singleData._id)} className="btn btn-info text-white">Approve</button>
+                                            <button onClick={() => handleApprove(singleData._id)} className="btn btn-info text-white">Approve</button>
                                     }
                                 </td>
                             </tr>)

@@ -6,7 +6,7 @@ const PopularClass = () => {
     const [classes, setClasses]=useState([])
 
     useEffect(()=>{
-        fetch('http://localhost:5000/classes')
+        fetch('http://localhost:5000/aprovedclasses')
         .then(res=>res.json())
         .then(data=>setClasses(data))
     },[])
