@@ -14,37 +14,68 @@ const ManageClasses = () => {
         const res = await axiosSecure.get('/classes')
         return res.data
     })
-    
 
 
-    const handleDelete = id => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to delete this class",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Delete'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.delete(`/classes/${id}`)
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.deletedCount > 0) {
-                            refetch()
-                            Swal.fire(
-                                'Deleted!',
-                                'Your class has been deleted.',
-                                'success'
-                            )
-                        }
-                    })
-            }
-        })
-    }
+
+    // const handleDelete = id => {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "You want to delete this class",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Delete'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axiosSecure.delete(`/classes/${id}`)
+    //                 .then(res => {
+    //                     console.log(res.data)
+    //                     if (res.data.deletedCount > 0) {
+    //                         refetch()
+    //                         Swal.fire(
+    //                             'Deleted!',
+    //                             'Your class has been deleted.',
+    //                             'success'
+    //                         )
+    //                     }
+    //                 })
+    //         }
+    //     })
+    // }
+
+
     const handleApprove = id => {
-        console.log(id)
+        console.log(id);
+        axiosSecure.patch(`/classes/${id}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire(
+                        'Approved',
+                        'Class is Approved',
+                        'success'
+                    )
+                }
+            })
+    }
+    const handleDeny = id => {
+        console.log(id);
+        axiosSecure.patch(`/classesdeny/${id}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire(
+                        'Deny',
+                        'Class is Denied',
+                        'error'
+                    )
+                }
+            })
+    }
+
+    const handleFeedback = classInfo => {
+        console.log(classInfo);
     }
 
     return (
@@ -57,60 +88,39 @@ const ManageClasses = () => {
 
 
             <div className="overflow-x-auto px-10">
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Class</th>
-                            <th>Instructor</th>
-                            <th>Price</th>
-                            <th>Delete Class</th>
-                            <th>Pay</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* row 1 */}
-
-                        {
-                            classes.map((singleData, index) => <tr key={singleData._id}>
-
-                                {index + 1}
-                                <td>
-                                    <div className="flex items-center space-x-3">
-
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12">
-                                                <img src={singleData.image} alt="Avatar Tailwind CSS Component" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="font-bold">{singleData.name}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    {singleData.instructorName}
-                                </td>
-                                <td>
-                                    ${singleData.price}
-                                </td>
-                                <td>
-                                    <button onClick={() => handleDelete(singleData._id)} className="btn btn-error">Delete</button>
-                                </td>
-                                <td>
-                                    {
-                                        singleData.state === 'approved' ? 'Approved' :
-                                            <button onClick={() => handleApprove(singleData._id)} className="btn btn-info text-white">Approve</button>
-                                    }
-                                </td>
-                            </tr>)
-                        }
-
-                    </tbody>
 
 
-                </table>
+                {
+                    classes.map((singleData, index) => <div key={singleData._id} className="card mb-10 lg:card-side bg-base-100 shadow-xl">
+                        <figure><img className="w-40 rounded" src={singleData.image} alt="Album" /></figure>
+                        <div className="card-body">
+                            <h1 className="text-4xl font-bold"># {index + 1}</h1>
+                            <h2 className="card-title">{singleData.name}</h2>
+                            <div className="grid grid-cols-2">
+                                <div>
+                                    <h1>Instructor: {singleData.instructorName}</h1>
+                                    <h1>Instructor Email: {singleData.instructorEmail}</h1>
+
+                                </div>
+                                <div>
+                                    <h5>Available Seats: {singleData.availableSeats}</h5>
+                                   <h5> Price: {singleData.price}</h5>
+                                </div>
+
+                            </div>
+                            
+                            <h4>State: <span className={`text-lg font-bold uppercase ${singleData.state === 'approved' ? 'text-green-400' : ''} `}> {singleData.state}</span></h4>
+                            <div className="card-actions justify-end">
+                                <button onClick={() => handleApprove(singleData._id)} className={`btn btn-info text-white ${singleData.state !== 'pending' ? 'btn-disabled' : ''}`}>Approve</button>
+                                <button onClick={() => handleDeny(singleData._id)} className={`btn btn-error text-white  ${singleData.state !== 'pending' ? 'btn-disabled' : ''}`}>Deny</button>
+                                <button onClick={() => handleFeedback(singleData)} className={`btn btn-success text-white `}>Feedback</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+
+                
             </div>
         </div>
     );

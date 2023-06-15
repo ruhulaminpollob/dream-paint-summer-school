@@ -106,7 +106,7 @@ const AllUsers = () => {
                                     <button onClick={() => handleMakeAdmin(user)} className={`btn btn-info text-white ${user.role === 'Admin' && 'btn-disabled'}`} >Make Admin</button>
                                 }</td>
                                 <td>{
-                                    <button onClick={() => handleMakeInstructor(user)} className={`btn btn-info text-white ${user.role === 'Admin' && 'btn-disabled'}`} >Instructor</button>
+                                    <button onClick={() => handleMakeInstructor(user)}  className={`btn btn-info text-white ${user.role === 'Instructor' && 'btn-disabled'}`} >Instructor</button>
                                 }</td>
                                 <td><button onClick={() => handleDelete(user)} className="btn btn-ghost text-red-400"><FaTrashAlt></FaTrashAlt></button></td>
                             </tr>)

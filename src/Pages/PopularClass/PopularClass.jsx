@@ -19,7 +19,7 @@ const PopularClass = () => {
             <div className="grid md:grid-cols-3 gap-5">
 
                 {
-                    classes.map(singleClass=><ClassCard key={singleClass._id} singleClass={singleClass}></ClassCard>)
+                    classes?.map(singleClass=><ClassCard key={singleClass._id} singleClass={singleClass}></ClassCard>)
                 }
             </div>
             
