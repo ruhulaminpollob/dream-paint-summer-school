@@ -18,6 +18,21 @@ const PaymentHistory = () => {
             })
     }, [user, axiosSecure])
 
+    const formattedPaymentData = history
+        .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by descending date
+        .map((payment) => ({
+            paidClassesName:payment.paidClassesName,
+            price: payment.price,
+            transactionId:payment.transactionId,
+            date: new Date(payment.date).toLocaleString('en-GB', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+            }),
+        }));
+
 
     return (
         <div>
@@ -31,19 +46,19 @@ const PaymentHistory = () => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
+                        <th>Class Name</th>
+                        <th>Transaction Id</th>
+                        <th>Date & time</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     {
-                        history.map((singleHistory, index) => <tr key={singleHistory._id}>
-                            <th>{index}</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
+                        formattedPaymentData.map((singleHistory, index) => <tr key={singleHistory._id}>
+                            <th>{index + 1}</th>
+                            <td>{singleHistory.paidClassesName}</td>
+                            <td>{singleHistory.transactionId}</td>
+                            <td>{singleHistory.date}</td>
                         </tr>)
                     }
 

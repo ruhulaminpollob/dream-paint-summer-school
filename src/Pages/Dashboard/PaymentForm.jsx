@@ -61,24 +61,25 @@ const PaymentForm = ({ price, classInfo }) => {
             console.log(confirmError)
         }
         setProcessing(false)
-        if (paymentIntent.status === 'succeeded') {
 
-            
+        if (paymentIntent.status === 'succeeded') {
+            console.log(paymentIntent);
+            setTransactionId(paymentIntent.id)
 
             const payment = {
                 userName: user?.displayName,
                 userEmail: user?.email,
-                transactionId,
                 price,
                 date: new Date(),
                 paidClassesId: classInfo._id,
-                paidClassesName: classInfo.name
+                paidClassesName: classInfo.name,
+                transactionId:paymentIntent.id,
             }
             axiosSecure.post('/payments', payment)
                 .then(res => {
                     if (res.data.insertedId) {
                         // axiosSecure.patch('/payments', payment)
-                        setTransactionId(paymentIntent.id)
+                       
                         Swal.fire(
                             'Success',
                             'Enrolled successfully',

@@ -37,7 +37,7 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
-                const user = { name: result.user.displayName, email: result.user.email, role: 'student' }
+                const user = { name: result.user.displayName, email: result.user.email, photo:result.user.photoURL, role: 'student' }
                 fetch('https://dream-paint-server.vercel.app/users', {
                     method: 'POST',
                     headers: {

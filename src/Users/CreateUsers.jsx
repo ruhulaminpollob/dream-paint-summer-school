@@ -30,7 +30,7 @@ const CreateUsers = () => {
             .then(() => {
                 profileDetails(data.name, data.photo)
                     .then(() => {
-                        const user = { name: data.name, email: data.email, role: 'student' }
+                        const user = { name: data.name, email: data.email, photo:data.photo, role: 'student' }
                         fetch('https://dream-paint-server.vercel.app/users', {
                             method: 'POST',
                             headers: {
@@ -64,7 +64,7 @@ const CreateUsers = () => {
         googleLogin()
             .then(result => {
 
-                const user = { name: result.user.displayName, email: result.user.email, role: 'student' }
+                const user = { name: result.user.displayName, email: result.user.email, photo:result.user.photoURL, role: 'student' }
                 fetch('https://dream-paint-server.vercel.app/users', {
                     method: 'POST',
                     headers: {
