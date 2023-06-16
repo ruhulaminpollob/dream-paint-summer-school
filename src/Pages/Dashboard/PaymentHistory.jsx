@@ -19,9 +19,6 @@ const PaymentHistory = () => {
     }, [user, axiosSecure])
 
 
-    console.log(history)
-    const { paidClassesName, transactionId, date } = history;
-    console.log(paidClassesName, transactionId, date);
     return (
         <div>
             <Helmet>

@@ -46,7 +46,6 @@ const PaymentForm = ({ price, classInfo }) => {
         }
         else {
             setCardError('')
-            // console.log(paymentMethod);
         }
         setProcessing(true)
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
@@ -61,7 +60,6 @@ const PaymentForm = ({ price, classInfo }) => {
         if (confirmError) {
             console.log(confirmError)
         }
-        console.log(paymentIntent);
         setProcessing(false)
         if (paymentIntent.status === 'succeeded') {
 

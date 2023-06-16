@@ -17,17 +17,16 @@ const AddClasses = () => {
     const handleSubmit = async event => {
         event.preventDefault()
         const form = event.target;
-        // console.log(event);
 
 
         const name = form.name.value
-        const availableSeat = form.availableSeat.value;
+        const availableSeats = parseFloat(form.availableSeat.value);
         const instructorName = form.instructorName.value;
         const instructorEmail = form.instructorEmail.value;
         const price = parseFloat(form.price.value);
         const image = form.image.files[0];
         const state = 'pending'
-        const newClass = { name, availableSeat, price, instructorName, instructorEmail, state }
+        const newClass = { name, availableSeats, price, instructorName, instructorEmail, state }
 
 
         const formData = new FormData();
@@ -40,11 +39,9 @@ const AddClasses = () => {
                 const imgURL = response.data.data.display_url;
                 const classData = newClass;
                 classData.image = imgURL;
-                // console.log(classData)
 
                 axiosSecure.post('/classes', classData)
                     .then(data => {
-                        console.log(data.data);
                         if (data.data.insertedId) {
                             Swal.fire(
                                 'Success',
@@ -55,12 +52,10 @@ const AddClasses = () => {
                         }
                     })
             }
-            // console.log(response.data);
         } catch (error) {
             console.error(error);
         }
     }
-    // console.log(user);
     return (
         <div className="p-5">
             <Helmet>

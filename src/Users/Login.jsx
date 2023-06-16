@@ -24,8 +24,7 @@ const Login = () => {
 
     const onSubmit = data => {
         login(data.email, data.password)
-            .then(result => {
-                console.log(result.user);
+            .then(() => {
                 navigate(from, { replace: true })
             })
             .catch(err => {
@@ -38,9 +37,8 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
-                console.log(result.user)
                 const user = { name: result.user.displayName, email: result.user.email, role: 'student' }
-                fetch('http://localhost:5000/users', {
+                fetch('https://dream-paint-server.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

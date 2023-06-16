@@ -69,7 +69,7 @@ import Feedback from "../Pages/Dashboard/Feedback";
             {
               path:'feedback/:id',
               element:<Feedback></Feedback>,
-              loader:({params})=>fetch(`http://localhost:5000/singleclass/${params.id}`)
+              loader:({params})=>fetch(`https://dream-paint-server.vercel.app/singleclass/${params.id}`)
               
             },
             {
@@ -95,7 +95,7 @@ import Feedback from "../Pages/Dashboard/Feedback";
             {
               path:'payment/:id',
               element:<Payment></Payment>,
-              loader:({params})=>fetch(`http://localhost:5000/payment/${params.id}`)
+              loader:({params})=>fetch(`https://dream-paint-server.vercel.app/payment/${params.id}`)
               
             },
             {

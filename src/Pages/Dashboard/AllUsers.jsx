@@ -19,7 +19,7 @@ const AllUsers = () => {
 
     const handleMakeAdmin = user => {
 
-        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+        fetch(`https://dream-paint-server.vercel.app/users/admin/${user._id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
@@ -38,12 +38,11 @@ const AllUsers = () => {
     }
     const handleMakeInstructor = user => {
 
-        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+        fetch(`https://dream-paint-server.vercel.app/users/instructor/${user._id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.modifiedCount) {
 
                     refetch()
@@ -59,7 +58,7 @@ const AllUsers = () => {
 
     // delete user
     const handleDelete = user => {
-        fetch(`http://localhost:5000/users/${user._id}`, {
+        fetch(`https://dream-paint-server.vercel.app/users/${user._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -103,10 +102,10 @@ const AllUsers = () => {
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>{
-                                    <button onClick={() => handleMakeAdmin(user)} className={`btn btn-info text-white ${user.role === 'Admin' && 'btn-disabled'}`} >Make Admin</button>
+                                    <button disabled={user.role === 'Admin'} onClick={() => handleMakeAdmin(user)} className={`btn btn-info text-white`} >Make Admin</button>
                                 }</td>
                                 <td>{
-                                    <button onClick={() => handleMakeInstructor(user)}  className={`btn btn-info text-white ${user.role === 'Instructor' && 'btn-disabled'}`} >Instructor</button>
+                                    <button disabled={user.role === 'Instructor'} onClick={() => handleMakeInstructor(user)}  className={`btn btn-info text-white `} >Instructor</button>
                                 }</td>
                                 <td><button onClick={() => handleDelete(user)} className="btn btn-ghost text-red-400"><FaTrashAlt></FaTrashAlt></button></td>
                             </tr>)

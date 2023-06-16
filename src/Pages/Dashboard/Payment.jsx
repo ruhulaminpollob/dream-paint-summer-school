@@ -9,8 +9,8 @@ import { useState } from "react";
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_PK)
 const Payment = () => {
     const loadedData = useLoaderData()
-    console.log(loadedData)
     const [classInfo, setClassInfo] = useState(loadedData)
+    console.log(setClassInfo);
 
     
     const price = parseFloat(classInfo.price.toFixed(2))

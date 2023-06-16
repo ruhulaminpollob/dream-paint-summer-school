@@ -14,11 +14,12 @@ const ManageClasses = () => {
         const res = await axiosSecure.get('/classes')
         return res.data
     })
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
+    const pendingClasses=classes.filter(pending=>pending.state=== 'pending')
+    const approvedClasses=classes.filter(approved=>approved.state=== 'approved')
 
     const handleApprove = id => {
-        console.log(id);
         axiosSecure.patch(`/classes/${id}`)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
@@ -32,7 +33,6 @@ const ManageClasses = () => {
             })
     }
     const handleDeny = id => {
-        console.log(id);
         axiosSecure.patch(`/classesdeny/${id}`)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
@@ -47,7 +47,7 @@ const ManageClasses = () => {
     }
 
     const handleFeedback = classInfo => {
-       navigate(`/dashboard/feedback/${classInfo._id}`)
+        navigate(`/dashboard/feedback/${classInfo._id}`)
     }
 
     return (
@@ -63,10 +63,10 @@ const ManageClasses = () => {
 
 
                 {
-                    classes.map((singleData, index) => <div key={singleData._id} className="card mb-10 lg:card-side bg-base-100 shadow-xl">
+                    pendingClasses.map((singleData) => <div key={singleData._id} className="card mb-10 lg:card-side bg-base-100 shadow-xl">
                         <figure><img className="w-40 rounded" src={singleData.image} alt="Album" /></figure>
                         <div className="card-body">
-                            <h1 className="text-4xl font-bold"># {index + 1}</h1>
+                            
                             <h2 className="card-title">{singleData.name}</h2>
                             <div className="grid grid-cols-2">
                                 <div>
@@ -83,9 +83,36 @@ const ManageClasses = () => {
 
                             <h4>State: <span className={`text-lg font-bold uppercase ${singleData.state === 'approved' ? 'text-green-400' : ''} `}> {singleData.state}</span></h4>
                             <div className="card-actions justify-end">
-                                <button onClick={() => handleApprove(singleData._id)} className={`btn btn-info text-white ${singleData.state !== 'pending' ? 'btn-disabled' : ''}`}>Approve</button>
-                                <button onClick={() => handleDeny(singleData._id)} className={`btn btn-error text-white  ${singleData.state !== 'pending' ? 'btn-disabled' : ''}`}>Deny</button>
-                                <button onClick={()=>handleFeedback(singleData)}  className={`btn btn-success text-white `}>Feedback</button>
+                                <button onClick={() => handleApprove(singleData._id)} className={`btn btn-info text-white `}>Approve</button>
+                                <button onClick={() => handleDeny(singleData._id)} className={`btn btn-error text-white `}>Deny</button>
+                                <button onClick={() => handleFeedback(singleData)} className={`btn btn-success text-white `}>Feedback</button>
+                            </div>
+                        </div>
+                    </div>
+                    )}
+                {
+                    approvedClasses.map((singleData) => <div key={singleData._id} className="card mb-10 lg:card-side bg-base-100 shadow-xl">
+                        <figure><img className="w-40 rounded" src={singleData.image} alt="Album" /></figure>
+                        <div className="card-body">
+                            <h2 className="card-title">{singleData.name}</h2>
+                            <div className="grid grid-cols-2">
+                                <div>
+                                    <h1>Instructor: {singleData.instructorName}</h1>
+                                    <h1>Instructor Email: {singleData.instructorEmail}</h1>
+
+                                </div>
+                                <div>
+                                    <h5>Available Seats: {singleData.availableSeats}</h5>
+                                    <h5> Price: {singleData.price}</h5>
+                                </div>
+
+                            </div>
+
+                            <h4>State: <span className={`text-lg font-bold uppercase ${singleData.state === 'approved' ? 'text-green-400' : ''} `}> {singleData.state}</span></h4>
+                            <div className="card-actions justify-end">
+                                <button disabled onClick={() => handleApprove(singleData._id)} className={`btn btn-info text-white `}>Approve</button>
+                                <button disabled onClick={() => handleDeny(singleData._id)} className={`btn btn-error text-white `}>Deny</button>
+                                <button onClick={() => handleFeedback(singleData)} className={`btn btn-success text-white `}>Feedback</button>
                             </div>
                         </div>
                     </div>

@@ -34,7 +34,7 @@ const ClassCard = ({ singleClass }) => {
         const myClassData={name, image, price,state:'selected',instructorName, email: user.email}
         
 
-        fetch("http://localhost:5000/myclasses", {
+        fetch("https://dream-paint-server.vercel.app/myclasses", {
             method:'POST',
             headers:{
                 'content-type':'application/json'
@@ -43,7 +43,6 @@ const ClassCard = ({ singleClass }) => {
         })
         .then(res=>res.json())
         .then(data=>{
-            console.log(data)
             if (data?.insertedId) {
                 Swal.fire(
                     'Good job!',
@@ -63,10 +62,9 @@ const ClassCard = ({ singleClass }) => {
         })
 
 
-        // console.log(name, 'class selected');
     }
     return (
-        <div className={`card card-compact w-96 bg-base-100 shadow-xl ${availableSeats === 0 && "bg-red-400"}`}>
+        <div className={`card card-compact w-72 mx-auto md:w-96 bg-base-100 shadow-xl ${availableSeats === 0 && "bg-red-400"}`}>
             <figure><img src={image} alt="Shoes" /></figure>
             <div className="card-body">
                 <h2 className="card-title">{name}</h2>

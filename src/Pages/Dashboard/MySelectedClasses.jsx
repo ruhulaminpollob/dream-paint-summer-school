@@ -19,7 +19,6 @@ const MySelectedClasses = () => {
 
 
 
-    // console.log(data);
     if (isLoading) {
         return
     }
@@ -27,8 +26,6 @@ const MySelectedClasses = () => {
 
 
     const totalPrice = selected.reduce((sum, singleData) => singleData.price + sum, 0)
-    // console.log(totalPrice);
-
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -40,7 +37,7 @@ const MySelectedClasses = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/selected/${id}`, {
+                fetch(`https://dream-paint-server.vercel.app/selected/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -66,7 +63,7 @@ const MySelectedClasses = () => {
         navigation(`/dashboard/payment/${id}`)
     }
     return (
-        <div>
+        <div className="">
             <Helmet>
                 <title>Dream Paint-My Selected Class</title>
             </Helmet>
@@ -77,7 +74,7 @@ const MySelectedClasses = () => {
 
             </div>
 
-            <div className="overflow-x-auto px-10">
+            <div className="  overflow-x-scroll px-10">
                 <table className="table">
                     {/* head */}
                     <thead>

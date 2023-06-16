@@ -10,13 +10,9 @@ const MyEnrolledClasses = () => {
         if (data) {
           const isEnrolled = data.filter(item => item.state === 'enrolled')
           setEnrolled(isEnrolled)
-          console.log(enrolled)
         }
       }, [data])
 
-
-    
-    // console.log(data);
     if (isLoading) {
         return
     }

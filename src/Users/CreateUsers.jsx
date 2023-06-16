@@ -27,12 +27,11 @@ const CreateUsers = () => {
 
         //createUser 
         createUser(data.email, data.password)
-            .then(result => {
-                console.log(result.user);
+            .then(() => {
                 profileDetails(data.name, data.photo)
                     .then(() => {
                         const user = { name: data.name, email: data.email, role: 'student' }
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://dream-paint-server.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
@@ -64,10 +63,9 @@ const CreateUsers = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
-                console.log(result.user)
 
                 const user = { name: result.user.displayName, email: result.user.email, role: 'student' }
-                fetch('http://localhost:5000/users', {
+                fetch('https://dream-paint-server.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -86,7 +84,6 @@ const CreateUsers = () => {
             })
     }
 
-    // console.log(watch("example"));
     return (
         <div>
             <Helmet>
