@@ -1,17 +1,32 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useClasses from "../../Utilities/useClasses";
 
 
 const MySelectedClasses = () => {
     const [data, isLoading, refetch] = useClasses()
+    const [selected, setSelected]=useState([])
+    useEffect(() => {
+        if (data) {
+          const isSelected = data.filter(item => item.state === 'selected')
+          setSelected(isSelected)
+          console.log(selected)
+        }
+      }, [data])
 
-    console.log(data);
+
+    
+    // console.log(data);
     if (isLoading) {
         return
     }
-    const totalPrice = data.reduce((sum, singleData) => singleData.price + sum, 0)
-    console.log(totalPrice);
+
+    
+
+    const totalPrice = selected.reduce((sum, singleData) => singleData.price + sum, 0)
+    // console.log(totalPrice);
 
     const handleDelete=(id)=>{
         Swal.fire({
@@ -29,7 +44,6 @@ const MySelectedClasses = () => {
                 })
                 .then(res=>res.json())
                 .then(datas=>{
-                    console.log(datas)
                     if (datas.deletedCount > 0) {
                         refetch()
 
@@ -45,6 +59,19 @@ const MySelectedClasses = () => {
             }
           })
     }
+
+    // const navigate=useNavigate()
+    // // handle payment all together ----------
+    // const paymentAll=()=>{
+    //    navigate('/')
+    //     //
+    //     console.log('pay all clicked');
+    // }
+
+    // // handle single payment --------------
+    // const handlePayment=()=>{
+    //     console.log('single payment clicked')
+    // }
     return (
         <div>
             <Helmet>
@@ -54,7 +81,13 @@ const MySelectedClasses = () => {
             <h1 className="py-10 text-4xl font-bold text-center underline text-cyan-400">Selected Classes</h1>
             <div className="flex items-center bg-gray-50 p-5 justify-around">
                 <h1 className="text-2xl font-bold">Total Price = ${totalPrice}</h1>
-                <button className="btn btn-info text-white">Pay All Together</button>
+                {/* <button onClick={()=>paymentAll()} className="btn btn-info text-white">Pay All Together</button> */}
+                
+                {
+                    totalPrice <= 0 ? <button disabled className="btn btn-info text-white">Pay All Together</button> : <Link to='/dashboard/payment'  className="btn btn-info text-white">Pay All Together</Link>
+
+                } 
+                
 
             </div>
 
@@ -68,14 +101,13 @@ const MySelectedClasses = () => {
                             <th>Instructor</th>
                             <th>Price</th>
                             <th>Delete Class</th>
-                            <th>Pay</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* row 1 */}
 
                         {
-                            data.map((singleData, index) => <tr key={singleData._id}>
+                            selected.map((singleData, index) => <tr key={singleData._id}>
                                     
                                 {index + 1}
                                     <td>
@@ -98,11 +130,9 @@ const MySelectedClasses = () => {
                                         ${singleData.price}
                                     </td>
                                     <td>
-                                        <button onClick={()=>handleDelete(singleData._id)} className="btn btn-error">Delete</button>
+                                        <button onClick={()=>handleDelete(singleData._id)} className="btn btn-error text-white">Delete</button>
                                     </td>
-                                    <td>
-                                        <button className="btn btn-info text-white">Pay</button>
-                                    </td>
+                                    
                                 </tr>)
                         }
 

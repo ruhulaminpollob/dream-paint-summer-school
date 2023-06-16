@@ -1,22 +1,23 @@
-import { useContext } from "react";
+import { useContext, } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAdmin from "../../Utilities/useAdmin";
+import useInstructor from "../../Utilities/useInstructor";
 // import useAdmin from "../../Utilities/useAdmin";
 // import useInstructor from "../../Utilities/useInstructor";
 
 
 const Navbar = () => {
-    const { logOut, user } = useContext(AuthContext)
+    const { logOut, user, loading } = useContext(AuthContext)
+    
+        const [isAdmin] = useAdmin()
+        const [isInstructor] = useInstructor();
 
+    if (loading) {
+        return
+    }
 
-    console.log(user?.email);
-
-    // const [role, setRole] = useState('Student')
-
-    // user && fetch(`http://localhost:5000/user/${user?.email}`)
-    //     .then(res => res.json())
-    //     .then(data => setRole(data.role))
 
 
 
@@ -26,7 +27,25 @@ const Navbar = () => {
         <li className="hover:text-cyan-400"><Link to="/">Home</Link></li>
         <li className="hover:text-cyan-400"><Link to="/instructors">Instructors</Link></li>
         <li className="hover:text-cyan-400"><Link to="/classes">Classes</Link></li>
-        <li className="hover:text-cyan-400"><Link to={`/dashboard`}>Dashboard</Link></li>
+
+
+        {
+            isAdmin  ? <li className="hover:text-cyan-400"><Link to="/dashboard/admin">Dashboard</Link></li> : <>
+                {
+                    isInstructor  ? <li className="hover:text-cyan-400"><Link to="/dashboard/instructor">Dashboard</Link></li> : <li className="hover:text-cyan-400"><Link to="/dashboard/myselected">Dashboard</Link></li>
+
+                }
+
+            </>
+
+        }
+
+
+
+
+
+
+        {/* <li className="hover:text-cyan-400"><Link to={role == 'Admin' && `/dashboard/admin` || role == 'Instructor' && `/dashboard/instructor` || role =='student' && `/dashboard/myselected`}>Dashboard</Link></li> */}
         {/* <li className="hover:text-cyan-400"><Link>User Profile</Link></li> */}
     </>
 

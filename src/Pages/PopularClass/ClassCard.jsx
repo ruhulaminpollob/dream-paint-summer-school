@@ -10,6 +10,8 @@ const ClassCard = ({ singleClass }) => {
     
     
     const navigate=useNavigate()
+
+    //todo: some work to do
     const admin=false
 
     const handleSelectClass=()=>{
@@ -29,7 +31,7 @@ const ClassCard = ({ singleClass }) => {
               })
         }
         
-        const myClassData={name, image, price, email: user.email}
+        const myClassData={name, image, price,state:'selected',instructorName, email: user.email}
         
 
         fetch("http://localhost:5000/myclasses", {

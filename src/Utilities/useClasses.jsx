@@ -17,7 +17,7 @@ const useClasses = () => {
     
     
     })
-    console.log(data);
+    // console.log(data);
     return [data, isLoading, refetch]
 
 
