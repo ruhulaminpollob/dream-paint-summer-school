@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosSecure from "../../Utilities/useAxiosSecure";
 
-const PaymentForm = ({ price, data }) => {
+const PaymentForm = ({ price, classInfo }) => {
     const stripe = useStripe()
     const element = useElements()
     const [axiosSecure] = useAxiosSecure()
@@ -65,7 +65,7 @@ const PaymentForm = ({ price, data }) => {
         setProcessing(false)
         if (paymentIntent.status === 'succeeded') {
 
-            setTransactionId(paymentIntent.id)
+            
 
             const payment = {
                 userName: user?.displayName,
@@ -73,15 +73,14 @@ const PaymentForm = ({ price, data }) => {
                 transactionId,
                 price,
                 date: new Date(),
-                quantity: data.length,
-                paidClassesId: data.map(singleData => singleData._id),
-                paidClassesName: data.map(singleData => singleData.name)
-
-
+                paidClassesId: classInfo._id,
+                paidClassesName: classInfo.name
             }
             axiosSecure.post('/payments', payment)
                 .then(res => {
                     if (res.data.insertedId) {
+                        // axiosSecure.patch('/payments', payment)
+                        setTransactionId(paymentIntent.id)
                         Swal.fire(
                             'Success',
                             'Enrolled successfully',
@@ -121,7 +120,7 @@ const PaymentForm = ({ price, data }) => {
 
             }
             {
-                transactionId && <p className="text-green-400 text-lg font-bold">Payment Confirm</p>
+                transactionId && <p className="text-green-400 text-lg font-bold">Payment Complete Transaction Id: {transactionId}</p>
             }
         </div>
     );

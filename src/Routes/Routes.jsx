@@ -93,8 +93,10 @@ import Feedback from "../Pages/Dashboard/Feedback";
               element:<MyEnrolledClasses></MyEnrolledClasses>
             },
             {
-              path:'payment',
-              element:<Payment></Payment>
+              path:'payment/:id',
+              element:<Payment></Payment>,
+              loader:({params})=>fetch(`http://localhost:5000/payment/${params.id}`)
+              
             },
             {
               path:'paymenthistory',
