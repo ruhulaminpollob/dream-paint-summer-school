@@ -7,7 +7,6 @@ import Main from "../Layout/Main";
 import Classes from "../Pages/Classes/Classes";
 import Dashboard from "../Layout/Dashboard";
 import Home from "../Pages/Home/Home";
-import Instructors from "../Pages/Instructors/Instructors";
 import CreateUsers from "../Users/CreateUsers";
 import Login from "../Users/Login";
 import PrivateRoutes from "./PrivateRoutes";
@@ -23,6 +22,8 @@ import AddClasses from "../Pages/Dashboard/AddClasses";
 import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
 import Feedback from "../Pages/Dashboard/Feedback";
+import InstructorsPage from "../Pages/InstructorsPage/InstructorsPage";
+import Instructors from "../Pages/Dashboard/Instructors";
 
   const router = createBrowserRouter([
     {
@@ -43,7 +44,8 @@ import Feedback from "../Pages/Dashboard/Feedback";
         },
         {
           path:'/instructors',
-          element:<PrivateRoutes><Instructors></Instructors></PrivateRoutes>
+          element:<InstructorsPage></InstructorsPage>,
+          loader:()=>fetch('https://dream-paint-server.vercel.app/instructor')
         },
         {
           path:'/classes',
