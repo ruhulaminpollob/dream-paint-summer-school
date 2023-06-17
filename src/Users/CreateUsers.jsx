@@ -91,8 +91,6 @@ const CreateUsers = () => {
             </Helmet>
 
 
-
-
             <div className="min-h-screen py-10 bg-base-200">
                 <div className="w-72 md:w-96 flex-col mx-auto">
                     <div className="text-center">
@@ -112,8 +110,6 @@ const CreateUsers = () => {
                                 </label>
                                 <input type="email" {...register("email")} placeholder="Email" name="email" required className="input input-bordered" />
                             </div>
-
-
 
                             <div className="form-control">
                                 <label className="label">

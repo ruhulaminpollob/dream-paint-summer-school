@@ -13,7 +13,6 @@ const MySelectedClasses = () => {
         if (data) {
             const isSelected = data.filter(item => item.state === 'selected')
             setSelected(isSelected)
-            console.log(selected)
         }
     }, [data, refetch])
 
