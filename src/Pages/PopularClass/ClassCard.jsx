@@ -2,19 +2,22 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAdmin from "../../Utilities/useAdmin";
+import useInstructor from "../../Utilities/useInstructor";
 
 
 const ClassCard = ({ singleClass }) => {
-    const {user}=useContext(AuthContext)
-    const {name,image, instructorName, availableSeats, price}=singleClass || {}
-    
-    
-    const navigate=useNavigate()
+    const { user } = useContext(AuthContext)
+    const { name, image, instructorName, availableSeats, price } = singleClass || {}
+
+
+    const navigate = useNavigate()
 
     //todo: some work to do
-    const admin=false
+    const [isAdmin]=useAdmin()
+    const [isInstructor]=useInstructor()
 
-    const handleSelectClass=()=>{
+    const handleSelectClass = () => {
         if (!user) {
             Swal.fire({
                 title: 'Opps!',
@@ -24,42 +27,42 @@ const ClassCard = ({ singleClass }) => {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Login'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
-                  navigate('/login')
+                    navigate('/login')
                 }
-              })
+            })
         }
-        
-        const myClassData={name, image, price,state:'selected',instructorName, email: user.email}
-        
+
+        const myClassData = { name, image, price, state: 'selected', instructorName, email: user.email }
+
 
         fetch("https://dream-paint-server.vercel.app/myclasses", {
-            method:'POST',
-            headers:{
-                'content-type':'application/json'
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
             },
-            body:JSON.stringify(myClassData)
+            body: JSON.stringify(myClassData)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            if (data?.insertedId) {
-                Swal.fire(
-                    'Good job!',
-                    ` Class added to your wish list`,
-                    'success'
-                  )
-            }
-            else{
-                Swal.fire(
-                    'Ops!',
-                    `${data?.message}`,
-                    'error'
-                  )
-            }
-            
+            .then(res => res.json())
+            .then(data => {
+                if (data?.insertedId) {
+                    Swal.fire(
+                        'Good job!',
+                        ` Class added to your wish list`,
+                        'success'
+                    )
+                }
+                else {
+                    Swal.fire(
+                        'Ops!',
+                        `${data?.message}`,
+                        'error'
+                    )
+                }
 
-        })
+
+            })
 
 
     }
@@ -70,9 +73,13 @@ const ClassCard = ({ singleClass }) => {
                 <h2 className="card-title">{name}</h2>
                 <p>Instructor: {instructorName}</p>
                 <p>Price:$ {price}</p>
-                <p>Available Seat: {availableSeats}</p>
+                <div className="flex">
+
+                    <p>Available Seat: {availableSeats}</p>
+                    <p>Total Seats: 20</p>
+                </div>
                 <div className="card-actions justify-end ">
-                    <button onClick={handleSelectClass} className={`btn btn-info text-white ${admin || availableSeats === 0  ? "btn-disabled" : ''}`}  >Select Class</button>
+                    <button onClick={handleSelectClass} disabled={isAdmin || isInstructor || availableSeats <= 0 } className={`btn btn-info text-white `}  >Select Class</button>
                 </div>
             </div>
         </div>
