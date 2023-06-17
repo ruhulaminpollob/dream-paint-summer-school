@@ -28,7 +28,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="text-center py-5">
+            <div className="text-center pt-10 py-5">
                 <p>Copyright © 2023 - All right reserved by Dream Paint Summer School , Calefonia</p>
             </div>
         </footer>

@@ -30,7 +30,7 @@ const CreateUsers = () => {
             .then(() => {
                 profileDetails(data.name, data.photo)
                     .then(() => {
-                        const user = { name: data.name, email: data.email, photo:data.photo, role: 'student' }
+                        const user = { name: data.name, email: data.email, image:data.photo, role: 'student' }
                         fetch('https://dream-paint-server.vercel.app/users', {
                             method: 'POST',
                             headers: {

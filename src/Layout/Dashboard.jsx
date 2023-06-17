@@ -26,7 +26,7 @@ const Dashboard = () => {
                             <li><Link to="/dashboard/admin">Admin</Link></li>
                             <li><Link to="/dashboard/manageclasses">Manage Classes</Link></li>
                             {/* <Link to="/dashboard/payment">Payment</Link> */}
-                            <li><Link to="/dashboard/allusers">Manage Students</Link></li>
+                            <li><Link to="/dashboard/allusers">Manage Users</Link></li>
                         </> : <>
                             {
                                 isInstructor ? <>

@@ -77,9 +77,10 @@ const AllUsers = () => {
     return (
         <div>
             <Helmet>
-                <title>Dream Paint-All Users</title>
+                <title>Dream Paint-Manage Users</title>
             </Helmet>
-            <h3 className="text-3xl font-semibold my-4">Total Users: {users.length}</h3>
+            <h1 className="text-cyan-400 text-2xl md:text-4xl font-bold underline text-center py-10">Manage User</h1>
+            <h3 className="text-3xl md:ml-10 ml-3 font-semibold my-4">Total Users: {users.length}</h3>
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">
                     {/* head */}

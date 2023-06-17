@@ -78,10 +78,10 @@ const AddClasses = () => {
                     </div>
                     <div className="form-control  md:w-1/2">
                         <label className="label">
-                            <span className="label-text">Seat</span>
+                            <span className="label-text">Seats</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name='availableSeat' required placeholder="Seat" className="input input-bordered w-full" />
+                            <input type="text" name='availableSeats' required disabled defaultValue='20' placeholder="Seat" className="input input-bordered w-full" />
                         </label>
                     </div>
                 </div>

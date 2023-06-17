@@ -23,7 +23,7 @@ const Instructors = () => {
 
                user && <div className="hero min-h-screen bg-base-200">
                     <div className="hero-content flex-col lg:flex-row-reverse">
-                        <img src={user?.photoURL} className="max-w-4xl rounded-full shadow-2xl" />
+                        <img src={user?.photoURL} className="w-40 rounded-full shadow-2xl" />
                         <div>
                             <h1 className="text-5xl font-bold">{user.displayName}</h1>
                             <p className="py-6">Instructors of Dream Paint summer school, calefonia</p>

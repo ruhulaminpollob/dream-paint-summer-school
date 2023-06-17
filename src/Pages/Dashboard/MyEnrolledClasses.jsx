@@ -24,7 +24,7 @@ const MyEnrolledClasses = () => {
                 <title>Dream Paint-My enrolled Class</title>
             </Helmet>
 
-            <h1 className="py-10 text-4xl font-bold text-center underline text-cyan-400">enrolled Classes</h1>
+            <h1 className="py-10 text-4xl font-bold text-center underline text-cyan-400">Enrolled Classes</h1>
             
 
             <div className="overflow-x-auto px-10">

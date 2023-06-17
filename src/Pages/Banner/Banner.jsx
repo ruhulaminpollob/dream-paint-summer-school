@@ -1,6 +1,7 @@
 
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
   const slides = [
@@ -22,9 +23,9 @@ const Banner = () => {
               <h2 className="text-2xl md:text-4xl font-bold mb-4">{slide.caption}</h2>
               <p className="text-lg md:mb-8">In This Summer Invest in your hobby</p>
               <div className="space-x-4">
-                <button className="px-4  py-2 md:px-8 md:py-4 bg-yellow-400 text-white rounded">
+                <Link  to="/classes" className="px-4  py-2 md:px-8 md:py-4 bg-yellow-400 text-white rounded">
                  Find Out More
-                </button>
+                </Link>
               </div>
             </div>
           </div>
