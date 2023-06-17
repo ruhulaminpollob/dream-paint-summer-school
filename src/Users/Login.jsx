@@ -81,9 +81,9 @@ const Login = () => {
 
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Confirm Password</span>
+                                    <span className="label-text">Password</span>
                                 </label>
-                                <input type={showPassword ? 'password' : "text"}   {...register("password", {
+                                <input type={!showPassword ? 'password' : "text"}   {...register("password", {
                                     minLength: 6,
                                     pattern: /(?=.*[A-Z])(?=.*[!@#$&*])/
                                 })} placeholder="password" className="input input-bordered" />
